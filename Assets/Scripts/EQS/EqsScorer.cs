@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CustomUtils;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace EQS
+namespace SuperKatanaTiger.EQS
 {
     public static class EqsScorer
     {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SuperKatanaTiger.EQS;
 using UnityEngine;
 
 namespace EQS

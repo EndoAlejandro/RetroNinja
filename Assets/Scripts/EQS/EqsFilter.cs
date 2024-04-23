@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Endo;
 using UnityEngine;
 
-namespace EQS
+namespace SuperKatanaTiger.EQS
 {
     public static class EqsFilter
     {
@@ -15,7 +14,7 @@ namespace EQS
                 if (!point.IsAvailable) continue;
 
                 var result = Physics.Raycast(point.Position + heightOffset, target.position + heightOffset,
-                    out RaycastHit hit, RobotConstants.VISION_RADIUS) && hit.transform != target;
+                    out RaycastHit hit, 2f /*TODO: Assign vision radius*/) && hit.transform != target;
 
                 if (inverse)
                     point.SetIsAvailable(result);

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace EQS
+namespace SuperKatanaTiger.EQS
 {
     public interface IEqsGenerator
     {

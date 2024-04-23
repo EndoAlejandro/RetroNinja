@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CustomUtils;
 using UnityEngine;
 
-namespace EQS
+namespace SuperKatanaTiger.EQS
 {
     public static class EqsGenerator
     {

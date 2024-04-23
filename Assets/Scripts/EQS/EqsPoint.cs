@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EQS
+namespace SuperKatanaTiger.EQS
 {
     public class EqsPoint
     {
