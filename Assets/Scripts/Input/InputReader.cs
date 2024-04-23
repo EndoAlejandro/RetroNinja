@@ -1,0 +1,29 @@
+﻿using UnityEngine;
+
+namespace SuperKatanaTiger.Input
+{
+    public class InputReader
+    {
+        private static InputReader Instance => _instance ??= new InputReader();
+        private static InputReader _instance;
+        private readonly NinjaInput _input;
+
+        public static Vector2 Movement => Instance._input.Main.Move.ReadValue<Vector2>();
+        public static Vector2 Aim => Instance.Aiming();
+        public static bool Attack => Instance._input.Main.Attack.WasPerformedThisFrame();
+        public static bool Parry => Instance._input.Main.Parry.WasPerformedThisFrame();
+        public static bool Run => Instance._input.Main.Run.WasPerformedThisFrame();
+
+        private InputReader()
+        {
+            _input = new NinjaInput();
+            _input.Main.Enable();
+        }
+
+        private Vector2 Aiming()
+        {
+            var mouseScreen = _input.Main.Aim.ReadValue<Vector2>();
+            return new Vector2(mouseScreen.x / Screen.width, mouseScreen.y / Screen.height); //- Vector2.one / 2;
+        }
+    }
+}

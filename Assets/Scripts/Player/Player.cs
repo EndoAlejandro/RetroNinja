@@ -1,0 +1,62 @@
+using SuperKatanaTiger.Input;
+using UnityEngine;
+
+namespace SuperKatanaTiger.Player
+{
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(CapsuleCollider))]
+    public class Player : MonoBehaviour
+    {
+        public HitBox HitBox => hitBox;
+
+        [SerializeField] private float acceleration = 50f;
+        [SerializeField] private float deceleration = 100f;
+        [SerializeField] private float velocity = 4f;
+        [SerializeField] private float rotationSpeed = 10f;
+
+        [SerializeField] private Transform aimObject;
+        [SerializeField] private HitBox hitBox;
+
+        private Collider _collider;
+        private Rigidbody _rigidbody;
+
+        private Vector3 _targetVelocity;
+
+        private void Awake()
+        {
+            _collider = GetComponent<Collider>();
+            _rigidbody = GetComponent<Rigidbody>();
+
+            _targetVelocity = Vector2.zero;
+        }
+
+        private void FixedUpdate()
+        {
+            AimDirection();
+            ApplyVelocity();
+        }
+
+        private void ApplyVelocity()
+        {
+            _rigidbody.velocity = _targetVelocity;
+        }
+
+        private void AimDirection()
+        {
+            Vector2 playerViewPort = Camera.main.WorldToViewportPoint(transform.position);
+            var viewportDirection = (InputReader.Aim - playerViewPort).normalized;
+            var aimDirection = new Vector3(viewportDirection.x, 0f, viewportDirection.y);
+
+            aimObject.forward =
+                Vector3.Lerp(aimObject.forward, aimDirection, Time.deltaTime * rotationSpeed);
+        }
+
+        public void Move(Vector2 value) => _targetVelocity = value == Vector2.zero
+            ? Vector3.MoveTowards(_rigidbody.velocity,
+                Vector3.zero,
+                Time.deltaTime * deceleration)
+            : Vector3.MoveTowards(_rigidbody.velocity,
+                new Vector3(value.x, 0f, value.y) * velocity,
+                Time.deltaTime * acceleration);
+    }
+}
