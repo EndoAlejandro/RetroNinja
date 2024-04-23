@@ -1,6 +1,4 @@
-﻿using SuperKatanaTiger.StateMachineComponents;
-
-namespace DarkHavoc.StateMachineComponents
+﻿namespace SuperKatanaTiger.StateMachineComponents
 {
     public class BlankState : IState
     {

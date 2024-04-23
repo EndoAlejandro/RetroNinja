@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DarkHavoc.Pooling
+namespace SuperKatanaTiger.Pooling
 {
     public class AnimatedPoolAfterSecond : PooledMonoBehaviour
     {

@@ -1,5 +1,3 @@
-using DarkHavoc.StateMachineComponents;
-
 namespace SuperKatanaTiger.StateMachineComponents
 {
     public interface IState

@@ -1,4 +1,4 @@
-﻿namespace SuperKatanaTiger.Player
+﻿namespace SuperKatanaTiger.PlayerComponents
 {
     public enum DamageResult
     {

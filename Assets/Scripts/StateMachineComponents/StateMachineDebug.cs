@@ -1,8 +1,7 @@
-using SuperKatanaTiger.StateMachineComponents;
 using TMPro;
 using UnityEngine;
 
-namespace DarkHavoc.StateMachineComponents
+namespace SuperKatanaTiger.StateMachineComponents
 {
     public class StateMachineDebug : MonoBehaviour
     {

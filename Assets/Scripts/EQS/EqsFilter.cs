@@ -13,17 +13,15 @@ namespace SuperKatanaTiger.EQS
             {
                 if (!point.IsAvailable) continue;
 
-                var result = Physics.Raycast(point.Position + heightOffset, target.position + heightOffset,
-                    out RaycastHit hit, 2f /*TODO: Assign vision radius*/) && hit.transform != target;
+                var result = Physics.Raycast(point.Position + heightOffset,
+                                 (target.position - point.Position).normalized, out RaycastHit hit, float.MaxValue) &&
+                             hit.transform != target;
 
-                if (inverse)
-                    point.SetIsAvailable(result);
-                else
-                    point.SetIsAvailable(!result);
+                point.SetIsAvailable(inverse ? result : !result);
             }
         }
 
-        [Obsolete]
+        [Obsolete("Use the other one.", true)]
         public static void FilterByVisibility(ref List<EqsPoint> points, IEqsGenerator generator, float height)
         {
             foreach (var point in points)

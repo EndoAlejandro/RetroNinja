@@ -26,11 +26,30 @@ namespace SuperKatanaTiger.EQS
                 var path = new NavMeshPath();
                 NavMesh.CalculatePath(origin, point.Position, NavMesh.AllAreas, path);
                 var normalizedPathLenght = path.GetPathLenght() / maxDistance;
-                
+
                 if (inverse)
                     point.AddScore(normalizedPathLenght, weight);
                 else
                     point.AddScore(1 - normalizedPathLenght, weight);
+            }
+        }
+
+        public static void ScoreByRadiusDistance(ref List<EqsPoint> points, Vector3 target, float radius,
+            bool inverse = false, int weight = 1)
+        {
+            foreach (var point in points)
+            {
+                if (!point.IsAvailable) continue;
+                
+                var distance = Vector3.Distance(point.Position, target);
+                if (distance > radius)
+                {
+                    point.AddScore(0f, weight);
+                    continue;
+                }
+
+                var normalizedDistance = distance / radius;
+                point.AddScore(inverse ? 1 - normalizedDistance : normalizedDistance, weight);
             }
         }
 
@@ -44,13 +63,10 @@ namespace SuperKatanaTiger.EQS
 
                 var distance = Vector3.Distance(point.Position, origin);
                 var normalizedDistance = distance / maxDistance;
-                if (inverse)
-                    point.AddScore(1 - normalizedDistance, weight);
-                else
-                    point.AddScore(normalizedDistance, weight);
+                point.AddScore(inverse ? 1 - normalizedDistance : normalizedDistance, weight);
             }
         }
-        
+
         public static void WeightScoreByHeight(ref List<EqsPoint> points, float height)
         {
             var maxHeight = float.MinValue;

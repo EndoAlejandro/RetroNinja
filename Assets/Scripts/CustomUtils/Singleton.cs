@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CustomUtils
+namespace SuperKatanaTiger.CustomUtils
 {
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {

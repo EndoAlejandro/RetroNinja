@@ -8,6 +8,7 @@ namespace SuperKatanaTiger.EQS
         public float Score { get; private set; }
         public Vector3 Position { get; private set; }
         public bool IsAvailable { get; private set; }
+        public Transform AssignedTransform { get; private set; }
 
         private float _rawScore;
         private int _scorersAmount;
@@ -30,6 +31,7 @@ namespace SuperKatanaTiger.EQS
 
         public void SetScore(float value) => Score = value;
         public void SetIsAvailable(bool value) => IsAvailable = value;
+        public void AssignTransform(Transform value) => AssignedTransform = value;
 
         private class PointScore
         {

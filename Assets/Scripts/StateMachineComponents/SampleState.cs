@@ -1,8 +1,6 @@
-using SuperKatanaTiger.StateMachineComponents;
 using UnityEngine;
-using AnimationState = SuperKatanaTiger.StateMachineComponents.AnimationState;
 
-namespace DarkHavoc.StateMachineComponents
+namespace SuperKatanaTiger.StateMachineComponents
 {
     public class SampleState : IState
     {

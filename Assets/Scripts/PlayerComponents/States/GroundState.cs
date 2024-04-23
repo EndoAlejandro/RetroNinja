@@ -1,8 +1,7 @@
-using DarkHavoc.StateMachineComponents;
 using SuperKatanaTiger.Input;
 using SuperKatanaTiger.StateMachineComponents;
 
-namespace SuperKatanaTiger.Player.States
+namespace SuperKatanaTiger.PlayerComponents.States
 {
     public class GroundState : IState
     {
@@ -10,10 +9,10 @@ namespace SuperKatanaTiger.Player.States
         public AnimationState AnimationState => AnimationState.Ground;
         public bool CanTransitionToSelf => false;
 
-        private readonly Player _player;
+        private readonly PlayerComponents.Player _player;
         private readonly HitBox _hitBox;
 
-        public GroundState(Player player, HitBox hitBox)
+        public GroundState(PlayerComponents.Player player, HitBox hitBox)
         {
             _player = player;
             _hitBox = hitBox;

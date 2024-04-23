@@ -1,7 +1,7 @@
-using DarkHavoc.StateMachineComponents;
-using SuperKatanaTiger.Player.States;
+using SuperKatanaTiger.PlayerComponents.States;
+using SuperKatanaTiger.StateMachineComponents;
 
-namespace SuperKatanaTiger.Player
+namespace SuperKatanaTiger.PlayerComponents
 {
     public class PlayerStateMachine : FiniteStateBehaviour
     {

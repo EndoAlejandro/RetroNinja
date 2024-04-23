@@ -19,7 +19,8 @@ namespace SuperKatanaTiger.EQS
             foreach (var point in points)
             {
                 if (!point.IsAvailable) continue;
-                if (bestPoint == null || point.Score > bestPoint.Score) bestPoint = point;
+                if ((bestPoint == null || point.Score > bestPoint.Score) && !point.AssignedTransform)
+                    bestPoint = point;
             }
 
             return bestPoint;
@@ -37,20 +38,19 @@ namespace SuperKatanaTiger.EQS
             LayerMask layerMask)
         {
             var points = new List<EqsPoint>();
-            var max = 0f;
             for (float i = -radius; i < radius; i += distanceBetweenPoints)
             {
                 for (float j = -radius; j < radius; j += distanceBetweenPoints)
                 {
                     // X Z Position.
-                    var pointPosition = Vector3.forward * -(radius / 2 - distanceBetweenPoints * i) +
-                                        Vector3.right * -(radius / 2 - distanceBetweenPoints * j);
+                    var pointPosition = new Vector3(
+                        -(distanceBetweenPoints * i),
+                        0f,
+                        -(distanceBetweenPoints * j));
+
                     pointPosition += origin.position;
-
-
                     var distance = Vector3.Distance(pointPosition, origin.position);
                     if (distance > radius) continue;
-                    if (distance > max) max = distance;
 
                     // Y Position.
                     var height = GetHeight(radius, pointPosition, layerMask);
@@ -81,7 +81,7 @@ namespace SuperKatanaTiger.EQS
             var size = Physics.RaycastNonAlloc(pointPosition.With(y: radius), Vector3.down, results,
                 radius * 2, layerMask);
             float? groundHeight = null;
-            
+
             for (int i = 0; i < size; i++)
             {
                 if (results[i].transform.CompareTag("Terrain"))

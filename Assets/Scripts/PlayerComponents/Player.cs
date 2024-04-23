@@ -1,11 +1,13 @@
+using CustomUtils;
+using SuperKatanaTiger.CustomUtils;
 using SuperKatanaTiger.Input;
 using UnityEngine;
 
-namespace SuperKatanaTiger.Player
+namespace SuperKatanaTiger.PlayerComponents
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CapsuleCollider))]
-    public class Player : MonoBehaviour
+    public class Player : Singleton<Player>
     {
         public HitBox HitBox => hitBox;
 
@@ -21,8 +23,9 @@ namespace SuperKatanaTiger.Player
         private Rigidbody _rigidbody;
         private Vector3 _targetVelocity;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _collider = GetComponent<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
 
@@ -55,5 +58,11 @@ namespace SuperKatanaTiger.Player
                 Time.deltaTime * deceleration)
             : Vector3.MoveTowards(_rigidbody.velocity, value * velocity,
                 Time.deltaTime * acceleration);
+
+
+        public void TakeDamage()
+        {
+            Debug.Log("Take Damage.");
+        }
     }
 }

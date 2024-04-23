@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using SuperKatanaTiger.EQS;
 using UnityEngine;
 
-namespace EQS
+namespace SuperKatanaTiger.EQS
 {
     [RequireComponent(typeof(LineRenderer))]
     public class EqsComponent : MonoBehaviour, IEqsGenerator
@@ -45,7 +44,7 @@ namespace EQS
         private List<EqsPoint> GeneratePoints(Transform t = null)
         {
             var points = t != null ? EqsGenerator.GetPointsAroundTarget(this, t) : EqsGenerator.GetPoints(this);
-            EqsFilter.FilterByVisibility(ref points, this, 1f);
+            //EqsFilter.FilterByVisibility(ref points, this, 1f, ~LayerMask.GetMask("Ignore Raycast"));
             EqsScorer.WeightScoreByHeight(ref points, t != null ? t.position.y : transform.position.y);
             return points; 
         }

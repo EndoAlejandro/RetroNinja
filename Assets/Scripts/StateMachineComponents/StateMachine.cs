@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using SuperKatanaTiger.StateMachineComponents;
 
-namespace DarkHavoc.StateMachineComponents
+namespace SuperKatanaTiger.StateMachineComponents
 {
     public class StateMachine
     {

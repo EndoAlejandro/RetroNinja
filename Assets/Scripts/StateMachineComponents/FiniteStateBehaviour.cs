@@ -1,8 +1,7 @@
 using System;
-using SuperKatanaTiger.StateMachineComponents;
 using UnityEngine;
 
-namespace DarkHavoc.StateMachineComponents
+namespace SuperKatanaTiger.StateMachineComponents
 {
     /// <summary>
     /// Base for using the basic configuration to work with a state machine.

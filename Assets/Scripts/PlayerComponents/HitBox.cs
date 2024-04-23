@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SuperKatanaTiger.Enemies;
 using UnityEngine;
 
-namespace SuperKatanaTiger.Player
+namespace SuperKatanaTiger.PlayerComponents
 {
     [RequireComponent(typeof(BoxCollider))]
     public sealed class HitBox : MonoBehaviour
@@ -24,7 +24,7 @@ namespace SuperKatanaTiger.Player
         private List<Enemy> OverlapHitBox()
         {
             Bounds bounds = _collider.bounds;
-            var size = Physics.OverlapBoxNonAlloc(bounds.center, bounds.size * .5f, _results,
+            var size = Physics.OverlapBoxNonAlloc(bounds.center, bounds.extents, _results,
                 Quaternion.Euler(transform.forward));
             var enemies = new List<Enemy>();
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DarkHavoc.Pooling
+namespace SuperKatanaTiger.Pooling
 {
     public class Pool : MonoBehaviour
     {

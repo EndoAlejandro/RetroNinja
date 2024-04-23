@@ -4,5 +4,6 @@
     {
         Ground,
         TakeDamage,
+        Attack
     }
 }

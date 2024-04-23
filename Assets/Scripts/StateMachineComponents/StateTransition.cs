@@ -1,7 +1,6 @@
 ﻿using System;
-using SuperKatanaTiger.StateMachineComponents;
 
-namespace DarkHavoc.StateMachineComponents
+namespace SuperKatanaTiger.StateMachineComponents
 {
     public class StateTransition {
         public readonly IState from;
