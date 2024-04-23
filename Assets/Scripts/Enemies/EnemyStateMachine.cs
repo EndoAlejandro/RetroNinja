@@ -15,8 +15,12 @@ namespace SuperKatanaTiger.Enemies
         protected override void StateMachine()
         {
             var ground = new GroundState(_enemy);
+            var takeDamage = new TakeDamageState(_enemy);
 
             stateMachine.SetState(ground);
+            stateMachine.AddTransition(takeDamage, ground, () => takeDamage.Ended);
+
+            stateMachine.AddAnyTransition(takeDamage, () => _enemy.Stunned);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace SuperKatanaTiger.Input
         private static InputReader _instance;
         private readonly NinjaInput _input;
 
-        public static Vector2 Movement => Instance._input.Main.Move.ReadValue<Vector2>();
+        public static Vector3 Movement => Instance.Moving();
         public static Vector2 Aim => Instance.Aiming();
         public static bool Attack => Instance._input.Main.Attack.WasPerformedThisFrame();
         public static bool Parry => Instance._input.Main.Parry.WasPerformedThisFrame();
@@ -20,6 +20,12 @@ namespace SuperKatanaTiger.Input
             _input.Main.Enable();
         }
 
+        private Vector3 Moving()
+        {
+            var movement = _input.Main.Move.ReadValue<Vector2>();
+            return new Vector3(movement.x, 0f, movement.y);
+        }
+        
         private Vector2 Aiming()
         {
             var mouseScreen = _input.Main.Aim.ReadValue<Vector2>();

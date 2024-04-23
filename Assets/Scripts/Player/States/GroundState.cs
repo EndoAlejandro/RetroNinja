@@ -1,5 +1,6 @@
 using DarkHavoc.StateMachineComponents;
 using SuperKatanaTiger.Input;
+using SuperKatanaTiger.StateMachineComponents;
 
 namespace SuperKatanaTiger.Player.States
 {

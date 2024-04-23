@@ -1,4 +1,5 @@
 ﻿using System;
+using SuperKatanaTiger.StateMachineComponents;
 
 namespace DarkHavoc.StateMachineComponents
 {

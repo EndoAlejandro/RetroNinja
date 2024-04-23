@@ -19,7 +19,6 @@ namespace SuperKatanaTiger.Player
 
         private Collider _collider;
         private Rigidbody _rigidbody;
-
         private Vector3 _targetVelocity;
 
         private void Awake()
@@ -51,12 +50,10 @@ namespace SuperKatanaTiger.Player
                 Vector3.Lerp(aimObject.forward, aimDirection, Time.deltaTime * rotationSpeed);
         }
 
-        public void Move(Vector2 value) => _targetVelocity = value == Vector2.zero
-            ? Vector3.MoveTowards(_rigidbody.velocity,
-                Vector3.zero,
+        public void Move(Vector3 value) => _targetVelocity = value == Vector3.zero
+            ? Vector3.MoveTowards(_rigidbody.velocity, Vector3.zero,
                 Time.deltaTime * deceleration)
-            : Vector3.MoveTowards(_rigidbody.velocity,
-                new Vector3(value.x, 0f, value.y) * velocity,
+            : Vector3.MoveTowards(_rigidbody.velocity, value * velocity,
                 Time.deltaTime * acceleration);
     }
 }
