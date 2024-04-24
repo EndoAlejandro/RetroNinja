@@ -12,7 +12,7 @@ namespace SuperKatanaTiger.Input
         public static Vector2 Aim => Instance.Aiming();
         public static bool Attack => Instance._input.Main.Attack.WasPerformedThisFrame();
         public static bool Parry => Instance._input.Main.Parry.WasPerformedThisFrame();
-        public static bool Run => Instance._input.Main.Run.WasPerformedThisFrame();
+        public static bool Run => Instance._input.Main.Run.IsPressed();
 
         private InputReader()
         {

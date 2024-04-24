@@ -18,15 +18,17 @@ namespace SuperKatanaTiger.Enemies
         {
             var ground = new GroundState(_enemy);
             var attack = new AttackState(_enemy, _attack);
-            var takeDamage = new TakeDamageState(_enemy);
+            var knockBack = new KnockBackState(_enemy);
+            var stun = new StunState(_enemy);
 
             stateMachine.SetState(ground);
 
-            stateMachine.AddTransition(takeDamage, ground, () => takeDamage.Ended);
             stateMachine.AddTransition(ground, attack, () => ground.Ended && !_attack.OnCoolDown);
             stateMachine.AddTransition(attack, ground, () => attack.Ended);
 
-            stateMachine.AddAnyTransition(takeDamage, () => _enemy.Stunned);
+            stateMachine.AddTransition(knockBack, stun, () => knockBack.Ended);
+            stateMachine.AddTransition(stun, ground, () => stun.Ended);
+            stateMachine.AddAnyTransition(knockBack, () => _enemy.Stunned);
         }
     }
 }

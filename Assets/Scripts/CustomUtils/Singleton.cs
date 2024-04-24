@@ -15,6 +15,11 @@ namespace SuperKatanaTiger.CustomUtils
             }
 
             Instance = this as T;
+            SingletonAwake();
+        }
+        
+        protected virtual void SingletonAwake()
+        {
         }
     }
 }

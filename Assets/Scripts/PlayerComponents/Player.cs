@@ -61,11 +61,19 @@ namespace SuperKatanaTiger.PlayerComponents
                 Vector3.Lerp(aimObject.forward, aimDirection, Time.deltaTime * rotationSpeed);
         }
 
-        public void Move(Vector3 value) => _targetVelocity = value == Vector3.zero
-            ? Vector3.MoveTowards(_rigidbody.velocity, Vector3.zero,
-                Time.deltaTime * deceleration)
-            : Vector3.MoveTowards(_rigidbody.velocity, value * velocity,
-                Time.deltaTime * acceleration);
+        public void Move(Vector3 value)
+        {
+            if (value == Vector3.zero)
+            {
+                _targetVelocity = Vector3.MoveTowards(_rigidbody.velocity, Vector3.zero, Time.deltaTime * deceleration);
+            }
+            else
+            {
+                var speedMultiplier = InputReader.Run ? 2f : 1f;
+                _targetVelocity = Vector3.MoveTowards(_rigidbody.velocity, value * (velocity * speedMultiplier),
+                    Time.deltaTime * acceleration);
+            }
+        }
 
 
         public void SetParryActive(bool value) => ParryActive = value;
