@@ -23,9 +23,7 @@ namespace SuperKatanaTiger.PlayerComponents
             _player.DamageDeflected += PlayerOnDamageDeflected;
         }
 
-
         public void PlayAttackFx() => attackFx.Get<PoolAfterSeconds>(_player.AimObject.position, _player.AimObject.rotation);
-
         private void PlayerOnDamageDeflected() => deflectDamageFeedback?.PlayFeedbacks();
         private void PlayerOnDamageTaken() => takeDamageFeedback?.PlayFeedbacks();
 
