@@ -6,7 +6,7 @@ namespace SuperKatanaTiger.Enemies
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(Collider))]
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, ITakeDamage
     {
         public event Action DamageTaken;
         public Vector3 Direction { get; private set; }

@@ -8,12 +8,13 @@ namespace SuperKatanaTiger.PlayerComponents
     [RequireComponent(typeof(BoxCollider))]
     public sealed class HitBox : MonoBehaviour
     {
+        public bool OnCooldown { get; private set; }
+        
         [SerializeField] private float cooldown = 1f;
         [SerializeField] private bool debug;
 
         private Collider[] _results;
         private Collider _collider;
-        private bool _onCooldown;
 
         private void Awake()
         {
@@ -21,33 +22,33 @@ namespace SuperKatanaTiger.PlayerComponents
             _results = new Collider[50];
         }
 
-        private List<Enemy> OverlapHitBox()
+        private List<ITakeDamage> OverlapHitBox()
         {
             Bounds bounds = _collider.bounds;
             var size = Physics.OverlapBoxNonAlloc(bounds.center, bounds.extents, _results,
                 Quaternion.Euler(transform.forward));
-            var enemies = new List<Enemy>();
+            var takeDamages = new List<ITakeDamage>();
 
             for (int i = 0; i < size; i++)
             {
-                if (!_results[i].TryGetComponent(out Enemy enemy)) continue;
-                enemies.Add(enemy);
+                if (!_results[i].TryGetComponent(out ITakeDamage takeDamage)) continue;
+                takeDamages.Add(takeDamage);
             }
 
-            return enemies;
+            return takeDamages;
         }
 
         public DamageResult TryToAttack()
         {
             DamageResult result = DamageResult.Failed;
-            if (_onCooldown) return result;
+            if (OnCooldown) return result;
 
-            var enemies = OverlapHitBox();
-            if (enemies.Count > 0) result = DamageResult.Success;
-            foreach (var enemy in enemies)
+            var takeDamages = OverlapHitBox();
+            if (takeDamages.Count > 0) result = DamageResult.Success;
+            foreach (var takeDamage in takeDamages)
             {
-                var direction = enemy.transform.position - transform.parent.position;
-                enemy.TakeDamage(direction.normalized);
+                var direction = takeDamage.transform.position - transform.parent.position;
+                takeDamage.TakeDamage(direction.normalized);
             }
 
             StartCoroutine(CooldownAsync());
@@ -56,9 +57,9 @@ namespace SuperKatanaTiger.PlayerComponents
 
         private IEnumerator CooldownAsync()
         {
-            _onCooldown = true;
+            OnCooldown = true;
             yield return new WaitForSeconds(cooldown);
-            _onCooldown = false;
+            OnCooldown = false;
         }
 
         private void OnDrawGizmos()

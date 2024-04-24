@@ -1,4 +1,4 @@
-using CustomUtils;
+using System;
 using SuperKatanaTiger.CustomUtils;
 using SuperKatanaTiger.Input;
 using UnityEngine;
@@ -9,15 +9,23 @@ namespace SuperKatanaTiger.PlayerComponents
     [RequireComponent(typeof(CapsuleCollider))]
     public class Player : Singleton<Player>
     {
+        public event Action DamageTaken;
+        public event Action DamageDeflected;
         public HitBox HitBox => hitBox;
+        public Transform AimObject => aimObject;
+        public float AttackDuration => attackDuration;
+        public float ParryTime => parryTime;
+        public bool ParryActive { get; private set; }
 
         [SerializeField] private float acceleration = 50f;
         [SerializeField] private float deceleration = 100f;
         [SerializeField] private float velocity = 4f;
         [SerializeField] private float rotationSpeed = 10f;
+        [SerializeField] private float attackDuration = .5f;
 
         [SerializeField] private Transform aimObject;
         [SerializeField] private HitBox hitBox;
+        [SerializeField] private float parryTime = 1f;
 
         private Collider _collider;
         private Rigidbody _rigidbody;
@@ -60,9 +68,20 @@ namespace SuperKatanaTiger.PlayerComponents
                 Time.deltaTime * acceleration);
 
 
-        public void TakeDamage()
+        public void SetParryActive(bool value) => ParryActive = value;
+
+        public DamageResult TakeDamage()
         {
-            Debug.Log("Take Damage.");
+            if (ParryActive)
+            {
+                DamageDeflected?.Invoke();
+                return DamageResult.Blocked;
+            }
+            else
+            {
+                DamageTaken?.Invoke();
+                return DamageResult.Success;
+            }
         }
     }
 }

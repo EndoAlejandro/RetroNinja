@@ -9,21 +9,12 @@ namespace SuperKatanaTiger.PlayerComponents.States
         public AnimationState AnimationState => AnimationState.Ground;
         public bool CanTransitionToSelf => false;
 
-        private readonly PlayerComponents.Player _player;
-        private readonly HitBox _hitBox;
+        private readonly Player _player;
 
-        public GroundState(PlayerComponents.Player player, HitBox hitBox)
-        {
-            _player = player;
-            _hitBox = hitBox;
-        }
+        public GroundState(Player player) => _player = player;
 
         public void Tick()
         {
-            if (InputReader.Attack)
-            {
-                var result =_hitBox.TryToAttack();
-            }
         }
 
         public void FixedTick()

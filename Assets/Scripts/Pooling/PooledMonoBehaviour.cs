@@ -35,7 +35,7 @@ namespace SuperKatanaTiger.Pooling
             OnReturnToPool?.Invoke(this);
         }
 
-        protected internal void ReturnToPool(float delay = 0f) {
+        protected virtual void ReturnToPool(float delay = 0f) {
             StartCoroutine(ReturnToPoolAfterSeconds(delay));
         }
 
