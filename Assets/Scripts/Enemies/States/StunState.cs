@@ -7,7 +7,7 @@ namespace SuperKatanaTiger.Enemies.States
     public class StunState : IState
     {
         public override string ToString() => "Stun";
-        public AnimationState AnimationState => AnimationState.TakeDamage;
+        public AnimationState AnimationState => AnimationState.Ground;
         public bool CanTransitionToSelf => false;
         public bool Ended => _timer <= 0f;
         private readonly Enemy _enemy;

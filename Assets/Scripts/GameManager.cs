@@ -8,9 +8,9 @@ namespace SuperKatanaTiger
     public class GameManager : Singleton<GameManager>
     {
         protected override void SingletonAwake() => DontDestroyOnLoad(gameObject);
-
         public void GoToMainMenu() => StartCoroutine(GoToSceneAsync("MainMenu"));
         public void GoToPlayground() => StartCoroutine(GoToSceneAsync("Playground"));
+        public void GoToBiome(Biome biome) => StartCoroutine(GoToSceneAsync(biome.ToString()));
         
         private IEnumerator GoToSceneAsync(string sceneName)
         {

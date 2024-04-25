@@ -1,6 +1,7 @@
 using System;
 using SuperKatanaTiger.CustomUtils;
 using SuperKatanaTiger.Input;
+using SuperKatanaTiger.Pooling;
 using UnityEngine;
 
 namespace SuperKatanaTiger.PlayerComponents
@@ -15,7 +16,10 @@ namespace SuperKatanaTiger.PlayerComponents
         public Transform AimObject => aimObject;
         public float AttackDuration => attackDuration;
         public float ParryTime => parryTime;
+        public float Health { get; private set; }
         public bool ParryActive { get; private set; }
+
+        [SerializeField] private int maxHealth = 100;
 
         [SerializeField] private float acceleration = 50f;
         [SerializeField] private float deceleration = 100f;
@@ -26,6 +30,8 @@ namespace SuperKatanaTiger.PlayerComponents
         [SerializeField] private Transform aimObject;
         [SerializeField] private HitBox hitBox;
         [SerializeField] private float parryTime = 1f;
+
+        [SerializeField] private PoolAfterSeconds deflectFx;
 
         private Collider _collider;
         private Rigidbody _rigidbody;
@@ -38,6 +44,7 @@ namespace SuperKatanaTiger.PlayerComponents
             _rigidbody = GetComponent<Rigidbody>();
 
             _targetVelocity = Vector2.zero;
+            Health = maxHealth;
         }
 
         private void FixedUpdate()
@@ -83,10 +90,12 @@ namespace SuperKatanaTiger.PlayerComponents
             if (ParryActive)
             {
                 DamageDeflected?.Invoke();
+                deflectFx.Get<PoolAfterSeconds>(transform.position + Vector3.up * .5f, Quaternion.identity);
                 return DamageResult.Blocked;
             }
             else
             {
+                Health--;
                 DamageTaken?.Invoke();
                 return DamageResult.Success;
             }

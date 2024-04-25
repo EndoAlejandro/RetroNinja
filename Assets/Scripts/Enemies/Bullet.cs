@@ -41,6 +41,7 @@ namespace SuperKatanaTiger.Enemies
                 var result = player.TakeDamage();
                 if (result == DamageResult.Blocked)
                 {
+                    transform.forward = -transform.forward;
                     _rigidbody.velocity = -_rigidbody.velocity;
                     _deflected = true;
                     return;

@@ -21,6 +21,10 @@ namespace SuperKatanaTiger.Enemies.States
         private NavMeshPath _path;
 
         private Vector3 _target;
+        private Vector3 _distance;
+        private bool _playerVisible;
+
+        private bool _playerDetected;
 
         public GroundState(Enemy enemy)
         {
@@ -30,12 +34,13 @@ namespace SuperKatanaTiger.Enemies.States
 
         public void Tick()
         {
-            var direction = Player.Instance.transform.position - _enemy.transform.position;
-            var result = Physics.Raycast(_enemy.transform.position + Vector3.up * .5f,
-                             direction.normalized, out RaycastHit hit, _enemy.Radius) &&
-                         hit.transform == Player.Instance.transform;
-            if (/*direction.magnitude <= _enemy.Radius * 1.5f && */result) 
-                Ended = true;
+            _distance = Player.Instance.transform.position - _enemy.transform.position;
+            _playerVisible = Physics.Raycast(_enemy.transform.position + Vector3.up * .5f,
+                                 _distance.normalized, out RaycastHit hit, _enemy.DetectionRadius) &&
+                             hit.transform == Player.Instance.transform;
+            if (!_playerVisible) return;
+            if (_distance.magnitude <= _enemy.DetectionRadius) _playerDetected = true;
+            if (_distance.magnitude <= _enemy.Radius) Ended = true;
         }
 
         public void FixedTick()
@@ -43,9 +48,9 @@ namespace SuperKatanaTiger.Enemies.States
             NavMesh.CalculatePath(_enemy.transform.position, _target, NavMesh.AllAreas, _path);
             var nextPoint = _path.corners.Length > 1 ? _path.corners[1] : _path.corners[0];
             var direction = nextPoint - _enemy.transform.position;
-            _enemy.Move(direction.magnitude > 0.33f ? direction.With(y: 0).normalized : Vector3.zero);
+            _enemy.Move(direction.magnitude > .45f && _playerDetected ? direction.With(y: 0).normalized : Vector3.zero);
 
-            if (direction.magnitude <= 0.33f) NextTarget();
+            if (direction.magnitude <= .5f) NextTarget();
         }
 
         private void NextTarget()
@@ -66,6 +71,7 @@ namespace SuperKatanaTiger.Enemies.States
         public void OnEnter()
         {
             Ended = false;
+            _playerVisible = false;
             NextTarget();
         }
 

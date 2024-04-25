@@ -20,6 +20,7 @@ namespace SuperKatanaTiger.Enemies
             var attack = new AttackState(_enemy, _attack);
             var knockBack = new KnockBackState(_enemy);
             var stun = new StunState(_enemy);
+            var death = new BlankState(AnimationState.Death);
 
             stateMachine.SetState(ground);
 
@@ -28,7 +29,9 @@ namespace SuperKatanaTiger.Enemies
 
             stateMachine.AddTransition(knockBack, stun, () => knockBack.Ended);
             stateMachine.AddTransition(stun, ground, () => stun.Ended);
+
             stateMachine.AddAnyTransition(knockBack, () => _enemy.Stunned);
+            stateMachine.AddAnyTransition(death, () => !_enemy.IsAlive);
         }
     }
 }

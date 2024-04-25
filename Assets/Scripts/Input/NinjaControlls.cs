@@ -73,6 +73,15 @@ namespace SuperKatanaTiger.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""7254a66b-f552-4e8a-8027-b2c314ae1cb4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -229,6 +238,28 @@ namespace SuperKatanaTiger.Input
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad4abaa3-b015-41b4-8700-f1ba6441a89f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9a94fbd-c3a8-4c3b-85e0-953a83872872"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -259,6 +290,7 @@ namespace SuperKatanaTiger.Input
             m_Main_Attack = m_Main.FindAction("Attack", throwIfNotFound: true);
             m_Main_Parry = m_Main.FindAction("Parry", throwIfNotFound: true);
             m_Main_Run = m_Main.FindAction("Run", throwIfNotFound: true);
+            m_Main_Pause = m_Main.FindAction("Pause", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -325,6 +357,7 @@ namespace SuperKatanaTiger.Input
         private readonly InputAction m_Main_Attack;
         private readonly InputAction m_Main_Parry;
         private readonly InputAction m_Main_Run;
+        private readonly InputAction m_Main_Pause;
         public struct MainActions
         {
             private @NinjaInput m_Wrapper;
@@ -334,6 +367,7 @@ namespace SuperKatanaTiger.Input
             public InputAction @Attack => m_Wrapper.m_Main_Attack;
             public InputAction @Parry => m_Wrapper.m_Main_Parry;
             public InputAction @Run => m_Wrapper.m_Main_Run;
+            public InputAction @Pause => m_Wrapper.m_Main_Pause;
             public InputActionMap Get() { return m_Wrapper.m_Main; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -358,6 +392,9 @@ namespace SuperKatanaTiger.Input
                 @Run.started += instance.OnRun;
                 @Run.performed += instance.OnRun;
                 @Run.canceled += instance.OnRun;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
 
             private void UnregisterCallbacks(IMainActions instance)
@@ -377,6 +414,9 @@ namespace SuperKatanaTiger.Input
                 @Run.started -= instance.OnRun;
                 @Run.performed -= instance.OnRun;
                 @Run.canceled -= instance.OnRun;
+                @Pause.started -= instance.OnPause;
+                @Pause.performed -= instance.OnPause;
+                @Pause.canceled -= instance.OnPause;
             }
 
             public void RemoveCallbacks(IMainActions instance)
@@ -410,6 +450,7 @@ namespace SuperKatanaTiger.Input
             void OnAttack(InputAction.CallbackContext context);
             void OnParry(InputAction.CallbackContext context);
             void OnRun(InputAction.CallbackContext context);
+            void OnPause(InputAction.CallbackContext context);
         }
     }
 }

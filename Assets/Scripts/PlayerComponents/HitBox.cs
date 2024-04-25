@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using SuperKatanaTiger.Enemies;
+using CustomUtils;
+using SuperKatanaTiger.Pooling;
 using UnityEngine;
 
 namespace SuperKatanaTiger.PlayerComponents
@@ -12,6 +13,8 @@ namespace SuperKatanaTiger.PlayerComponents
         
         [SerializeField] private float cooldown = 1f;
         [SerializeField] private bool debug;
+
+        [SerializeField] private PoolAfterSeconds slashFx;
 
         private Collider[] _results;
         private Collider _collider;
@@ -49,6 +52,7 @@ namespace SuperKatanaTiger.PlayerComponents
             {
                 var direction = takeDamage.transform.position - transform.parent.position;
                 takeDamage.TakeDamage(direction.normalized);
+                slashFx.Get<PoolAfterSeconds>(takeDamage.transform.position.With(y:.5f), Quaternion.identity);
             }
 
             StartCoroutine(CooldownAsync());
