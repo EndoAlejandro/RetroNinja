@@ -40,6 +40,13 @@ namespace SuperKatanaTiger.Enemies
 
         private void ShootFanBullets()
         {
+            if (bulletsPerShot <= 1)
+            {
+                var bullet = bulletPrefab.Get<Bullet>(aim.position + Vector3.up * .5f, Quaternion.LookRotation(aim.forward));
+                bullet.Setup(bulletSpeed);
+                return;
+            }
+
             float startAngle = -spreadAngle / 2;
             float angleStep = spreadAngle / (bulletsPerShot - 1);
 

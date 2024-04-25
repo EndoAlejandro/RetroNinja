@@ -97,6 +97,7 @@ namespace SuperKatanaTiger.PlayerComponents
             {
                 Health--;
                 DamageTaken?.Invoke();
+                if(Health <= 0) GameManager.Instance.GoToBiome(Biome.GameOver);
                 return DamageResult.Success;
             }
         }

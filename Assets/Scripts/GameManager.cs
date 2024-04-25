@@ -9,6 +9,7 @@ namespace SuperKatanaTiger
     {
         protected override void SingletonAwake() => DontDestroyOnLoad(gameObject);
         public void GoToMainMenu() => StartCoroutine(GoToSceneAsync("MainMenu"));
+        public void GoToCinematic() => StartCoroutine(GoToSceneAsync("Cinematic"));
         public void GoToBiome(Biome biome) => StartCoroutine(GoToSceneAsync(biome.ToString()));
         
         private IEnumerator GoToSceneAsync(string sceneName)

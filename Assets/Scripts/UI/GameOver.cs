@@ -1,21 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace SuperKatanaTiger
+namespace SuperKatanaTiger.UI
 {
     public class GameOver : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        [SerializeField] private Button gameOverButton;
+        private void Awake() => gameOverButton.onClick.AddListener(GameManager.Instance.GoToMainMenu);
     }
 }

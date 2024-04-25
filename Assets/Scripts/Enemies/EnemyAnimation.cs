@@ -2,13 +2,16 @@
 using MoreMountains.Feedbacks;
 using SuperKatanaTiger.StateMachineComponents;
 using UnityEngine;
+using AnimationState = SuperKatanaTiger.StateMachineComponents.AnimationState;
 
 namespace SuperKatanaTiger.Enemies
 {
     public class EnemyAnimation : MonoBehaviour
     {
         [SerializeField] private MMF_Player takeDamageFeedback;
+        [SerializeField] private MMF_Player attackFeedback;
 
+        private AnimationState _previousState;
         private Animator _animator;
         private SpriteRenderer _spriteRenderer;
         private Enemy _enemy;
@@ -17,6 +20,7 @@ namespace SuperKatanaTiger.Enemies
 
         private void Awake()
         {
+            _previousState = AnimationState.Ground;
             _animator = GetComponent<Animator>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _enemy = GetComponentInParent<Enemy>();
@@ -32,12 +36,17 @@ namespace SuperKatanaTiger.Enemies
         private void Update()
         {
             var targetVelocity = _enemy.TargetVelocity;
-            if (targetVelocity.x != 0f) _spriteRenderer.flipX = targetVelocity.x < 0f;  
+            if (targetVelocity.x != 0f) _spriteRenderer.flipX = targetVelocity.x < 0f;
             _animator.SetFloat(Velocity, Mathf.Min(targetVelocity.magnitude, 1f));
         }
 
-        private void StateMachineOOnEntityStateChanged(IState state) =>
+        private void StateMachineOOnEntityStateChanged(IState state)
+        {
+            if(state.AnimationState == AnimationState.Attack) attackFeedback?.PlayFeedbacks();
+            _animator.ResetTrigger(_previousState.ToString());
             _animator.SetTrigger(state.AnimationState.ToString());
+            _previousState = state.AnimationState;
+        }
 
         private void EnemyOnDamageTaken() => takeDamageFeedback?.PlayFeedbacks();
 

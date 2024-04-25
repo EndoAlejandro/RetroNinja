@@ -17,6 +17,7 @@ namespace SuperKatanaTiger.PlayerComponents
         [SerializeField] private MMF_Player takeDamageFeedback;
 
         [SerializeField] private MMF_Player deflectDamageFeedback;
+        [SerializeField] private MMF_Player attackFeedback;
 
         private static readonly int Velocity = Animator.StringToHash("Velocity");
 
@@ -52,6 +53,7 @@ namespace SuperKatanaTiger.PlayerComponents
 
         private void StateMachineOnEntityStateChanged(IState state)
         {
+            if(state.AnimationState == AnimationState.Attack) attackFeedback?.PlayFeedbacks();
             _animator.ResetTrigger(_previousState.ToString());
             _animator.SetTrigger(state.AnimationState.ToString());
             _previousState = state.AnimationState;
