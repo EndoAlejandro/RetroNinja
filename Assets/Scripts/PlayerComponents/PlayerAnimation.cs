@@ -1,6 +1,10 @@
+using System;
 using MoreMountains.Feedbacks;
+using SuperKatanaTiger.Input;
 using SuperKatanaTiger.Pooling;
+using SuperKatanaTiger.StateMachineComponents;
 using UnityEngine;
+using AnimationState = SuperKatanaTiger.StateMachineComponents.AnimationState;
 
 namespace SuperKatanaTiger.PlayerComponents
 {
@@ -8,22 +12,54 @@ namespace SuperKatanaTiger.PlayerComponents
     {
         [Header("Custom Vfx")]
         [SerializeField] private PoolAfterSeconds attackFx;
-        
+
         [Header("MM Feedbacks")]
         [SerializeField] private MMF_Player takeDamageFeedback;
+
         [SerializeField] private MMF_Player deflectDamageFeedback;
 
-        private Player _player;
+        private static readonly int Velocity = Animator.StringToHash("Velocity");
 
-        private void Awake() => _player = GetComponentInParent<Player>();
+        private AnimationState _previousState;
+        private Player _player;
+        private PlayerStateMachine _stateMachine;
+        private Animator _animator;
+        private SpriteRenderer _spriteRenderer;
+
+        private void Awake()
+        {
+            _previousState = AnimationState.Ground;
+            
+            _animator = GetComponent<Animator>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _player = GetComponentInParent<Player>();
+            _stateMachine = GetComponentInParent<PlayerStateMachine>();
+        }
 
         private void Start()
         {
             _player.DamageTaken += PlayerOnDamageTaken;
             _player.DamageDeflected += PlayerOnDamageDeflected;
+            _stateMachine.OnEntityStateChanged += StateMachineOnEntityStateChanged;
         }
 
-        public void PlayAttackFx() => attackFx.Get<PoolAfterSeconds>(_player.AimObject.position, _player.AimObject.rotation);
+        private void Update()
+        {
+            var movement = InputReader.Movement;
+            if (movement.x != 0f) _spriteRenderer.flipX = movement.x < 0f;
+            _animator.SetFloat(Velocity, Mathf.Min(InputReader.Movement.magnitude, 1f));
+        }
+
+        private void StateMachineOnEntityStateChanged(IState state)
+        {
+            _animator.ResetTrigger(_previousState.ToString());
+            _animator.SetTrigger(state.AnimationState.ToString());
+            _previousState = state.AnimationState;
+        }
+
+        public void PlayAttackFx() =>
+            attackFx.Get<PoolAfterSeconds>(_player.AimObject.position, _player.AimObject.rotation);
+
         private void PlayerOnDamageDeflected() => deflectDamageFeedback?.PlayFeedbacks();
         private void PlayerOnDamageTaken() => takeDamageFeedback?.PlayFeedbacks();
 

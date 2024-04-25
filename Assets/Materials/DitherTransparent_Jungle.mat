@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DitherTransparent
+  m_Name: DitherTransparent_Jungle
   m_Shader: {fileID: -6465566751694194690, guid: 7867f0dd74fa8684b87b8ac23c505478,
     type: 3}
   m_Parent: {fileID: 0}
@@ -24,8 +24,20 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AO_Texture:
+        m_Texture: {fileID: 2800000, guid: f8b4da84974bcc841985abe6e26dfb94, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AlbedoTexture:
         m_Texture: {fileID: 2800000, guid: 6d71faaf0745bff419265a37ac662189, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal_Texture:
+        m_Texture: {fileID: 2800000, guid: b6ae6bdfc3bf36746b006110b669f030, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Roughness_Texture:
+        m_Texture: {fileID: 2800000, guid: 24f2a929b20165e49baeaba20c611ada, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:

@@ -7,7 +7,7 @@ namespace SuperKatanaTiger.PlayerComponents
     public class ParryState : IState
     {
         public override string ToString() => "Parry";
-        public AnimationState AnimationState => AnimationState.Defend;
+        public AnimationState AnimationState => AnimationState.Parry;
         public bool CanTransitionToSelf => false;
         public bool Ended => _timer <= 0f;
         private readonly Player _player;

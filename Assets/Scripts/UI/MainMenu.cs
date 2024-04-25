@@ -11,8 +11,8 @@ namespace SuperKatanaTiger.UI
 
         private void Start()
         {
-            startGameButton.onClick.AddListener(GameManager.Instance.GoToPlayground);
-            creditsButton.onClick.AddListener(GameManager.Instance.GoToPlayground);
+            startGameButton.onClick.AddListener(() => GameManager.Instance.GoToBiome(Biome.City));
+            creditsButton.onClick.AddListener(() => GameManager.Instance.GoToBiome(Biome.City));
             exitGameButton.onClick.AddListener(Application.Quit);
         }
     }

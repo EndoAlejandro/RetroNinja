@@ -5,7 +5,7 @@
         Ground,
         TakeDamage,
         Attack,
-        Defend,
+        Parry,
         Death
     }
 }
